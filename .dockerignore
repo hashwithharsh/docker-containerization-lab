@@ -1,0 +1,10 @@
+.git
+.github
+.vscode
+*.md
+architecture.excalidraw.png
+__pycache__
+node_modules
+bin
+obj
+.env
