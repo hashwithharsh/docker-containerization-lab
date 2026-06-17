@@ -1,0 +1,6 @@
+.git
+.github
+.vscode
+*.md
+__pycache__
+*.pyc
