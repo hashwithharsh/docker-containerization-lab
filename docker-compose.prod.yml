@@ -1,0 +1,84 @@
+services:
+  # build from repo root so the Dockerfiles can copy service files
+  vote:
+    build:
+      context: .
+      dockerfile: docker/vote/Dockerfile
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    ports:
+      - "8080:80"
+    networks: [front-tier, back-tier]
+    restart: unless-stopped
+
+  result:
+    build:
+      context: .
+      dockerfile: docker/result/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    ports:
+      - "8081:80"
+    networks: [front-tier, back-tier]
+    restart: unless-stopped
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/worker/Dockerfile
+    depends_on:
+      redis:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    networks: [back-tier]
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - "./voting-app/healthchecks:/healthchecks:ro"
+    healthcheck:
+      test: ["CMD", "/healthchecks/redis.sh"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks: [back-tier]
+    restart: unless-stopped
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+      - "./voting-app/healthchecks:/healthchecks:ro"
+    healthcheck:
+      test: ["CMD", "/healthchecks/postgres.sh"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks: [back-tier]
+    restart: unless-stopped
+
+volumes:
+  db-data:
+
+networks:
+  front-tier:
+  back-tier:
