@@ -1,3 +1,4 @@
+# vote frontend image
 FROM python:3.11-slim AS base
 WORKDIR /usr/local/app
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -14,4 +15,4 @@ COPY voting-app/vote/ .
 RUN chown -R appuser:appuser /usr/local/app
 USER appuser
 EXPOSE 80
-CMD ["gunicorn", "app:app", "-b", "0.0.0.0:80", "--log-file", "-", "--access-logfile", "-", "--workers", "4", "--keep-alive", "0"]
+CMD ["gunicorn", "app:app", "-b", "0.0.0.0:80", "--log-file", "-", "--access-logfile", "-", "--workers", "3", "--keep-alive", "0"]
