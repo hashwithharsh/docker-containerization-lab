@@ -1,6 +1,6 @@
 # Containerized Multi-Service Voting App
 
-This project uses Docker's Example Voting App as the application workload. The application source is kept from the upstream sample; my work is focused on the Docker side: image builds, Dockerfiles, Compose, networking, health checks, persistent storage, image size and troubleshooting.
+This repository uses Docker's Example Voting App as the application workload. The application source is kept from the upstream sample; the focus is on Docker packaging, networking and operations: image builds, Dockerfiles, Compose, networking, health checks, persistent storage, image size, health checks and troubleshooting.
 
 ## Application pieces
 
