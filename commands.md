@@ -61,7 +61,7 @@ Use `--no-cache` only when I have a reason to suspect a stale layer. Otherwise I
 ```bash
 docker compose config
 docker compose build
-docker compose up -d
+docker compose up -d -d
 docker compose ps
 docker compose logs -f
 docker compose down
