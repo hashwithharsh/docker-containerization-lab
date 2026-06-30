@@ -82,3 +82,5 @@ volumes:
 networks:
   front-tier:
   back-tier:
+
+# no source bind mounts — intended for image-based runs
