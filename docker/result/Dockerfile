@@ -1,3 +1,4 @@
+# result frontend — Node
 FROM node:18-slim AS deps
 WORKDIR /usr/local/app
 COPY voting-app/result/package*.json ./
