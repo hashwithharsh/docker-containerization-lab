@@ -1,3 +1,4 @@
+# .NET worker service
 FROM --platform=${BUILDPLATFORM} mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG TARGETARCH
 WORKDIR /source
